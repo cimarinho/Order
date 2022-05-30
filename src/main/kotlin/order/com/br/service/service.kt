@@ -1,4 +1,4 @@
-package order.com.br.repository.service
+package order.com.br.service
 
 import order.com.br.model.Items
 import order.com.br.model.Order

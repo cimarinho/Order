@@ -10,10 +10,9 @@ import order.com.br.model.OrderError
 import order.com.br.model.validateUser
 import order.com.br.plugins.OrderException
 import order.com.br.plugins.OrderValidationException
-import order.com.br.repository.service.OrderService
+import order.com.br.service.OrderService
 
-
-fun Routing.orderRoutes(){
+fun Routing.orderRoutes() {
 
     val limitDefault = "1"
     val sizeDefault = "10"
@@ -21,7 +20,7 @@ fun Routing.orderRoutes(){
 
     get("/order") {
         val limit = call.parameters.get("limit") ?: limitDefault
-        val size = call.parameters.get("size")  ?: sizeDefault
+        val size = call.parameters.get("size") ?: sizeDefault
         println("limit $limit e size $size")
         call.respond(orderService.list(limit.toInt(), size.toInt()))
     }
@@ -29,7 +28,7 @@ fun Routing.orderRoutes(){
     get("/order/{orderId}") {
         val orderId = call.parameters.get("orderId") ?: throw OrderException("ID is required")
         val get = orderService.get(orderId)
-        call.respond(HttpStatusCode.OK,get)
+        call.respond(HttpStatusCode.OK, get)
     }
 
     put("/order/{orderId}") {
@@ -48,7 +47,7 @@ fun Routing.orderRoutes(){
         val validationResult = validateUser(order)
         if (validationResult.errors.size > 0) {
             val orderErros: MutableList<OrderError> = ArrayList()
-            validationResult.errors.forEach {  orderErros.add(OrderError(it.dataPath, it.message)) }
+            validationResult.errors.forEach { orderErros.add(OrderError(it.dataPath, it.message)) }
             throw OrderValidationException(orderErros)
         }
         call.respond(orderService.save(order))

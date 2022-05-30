@@ -18,14 +18,13 @@ fun Application.configureRouting() {
 
     install(StatusPages) {
 
-
         exception<Throwable> { call, cause ->
-            call.respondText(text = "500: $cause" , status = HttpStatusCode.InternalServerError)
+            call.respondText(text = "500: $cause", status = HttpStatusCode.InternalServerError)
         }
 
 
         exception<OrderValidationException> { call, cause ->
-             cause.error.forEach { println(it) }
+            cause.error.forEach { println(it) }
             call.respond(status = HttpStatusCode.BadRequest, cause.error)
         }
 
@@ -37,5 +36,6 @@ fun Application.configureRouting() {
     }
 
 }
+
 class OrderException(val error: String) : RuntimeException()
 class OrderValidationException(val error: List<OrderError>) : RuntimeException()
