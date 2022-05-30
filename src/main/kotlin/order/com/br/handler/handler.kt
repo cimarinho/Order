@@ -1,5 +1,6 @@
 package order.com.br.handler
 
+import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
@@ -27,7 +28,8 @@ fun Routing.orderRoutes(){
 
     get("/order/{orderId}") {
         val orderId = call.parameters.get("orderId") ?: throw OrderException("ID is required")
-        call.respond(orderService.get(orderId))
+        val get = orderService.get(orderId)
+        call.respond(HttpStatusCode.OK,get)
     }
 
     put("/order/{orderId}") {
@@ -49,7 +51,6 @@ fun Routing.orderRoutes(){
             validationResult.errors.forEach {  orderErros.add(OrderError(it.dataPath, it.message)) }
             throw OrderValidationException(orderErros)
         }
-
         call.respond(orderService.save(order))
     }
 

@@ -11,7 +11,8 @@ class OrderService {
 
     init {
         val item: MutableList<Items> = ArrayList()
-        item.add(Items("3", "Monitor", 165.8))
+        item.add(Items("23", "Monitor", 165.8))
+        item.add(Items("153", "Teclado", 165.8))
         entries.add(Order("123", LocalDateTime.now(), 63.5, "marinho", item))
     }
 
