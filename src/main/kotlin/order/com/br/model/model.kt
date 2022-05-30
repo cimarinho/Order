@@ -2,8 +2,10 @@ package order.com.br.model
 
 import com.fasterxml.jackson.annotation.JsonFormat
 import io.konform.validation.Validation
-import io.konform.validation.jsonschema.*
-import io.ktor.http.*
+import io.konform.validation.jsonschema.maxLength
+import io.konform.validation.jsonschema.minItems
+import io.konform.validation.jsonschema.minLength
+import io.konform.validation.jsonschema.minimum
 import java.time.LocalDateTime
 
 data class Order(
@@ -34,7 +36,6 @@ val validateUser = Validation<Order> {
         minItems(1)
     }
 
-    // validation on individual attendees
     Order::items onEach {
         Items::id ifPresent {
             minLength(2)
