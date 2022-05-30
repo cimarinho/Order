@@ -5,7 +5,10 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import order.com.br.model.Order
+import order.com.br.model.OrderError
+import order.com.br.model.validateUser
 import order.com.br.plugins.OrderException
+import order.com.br.plugins.OrderValidationException
 import order.com.br.repository.service.OrderService
 
 
@@ -40,6 +43,13 @@ fun Routing.orderRoutes(){
 
     post("/order") {
         val order = call.receive(Order::class)
+        val validationResult = validateUser(order)
+        if (validationResult.errors.size > 0) {
+            val orderErros: MutableList<OrderError> = ArrayList()
+            validationResult.errors.forEach {  orderErros.add(OrderError(it.dataPath, it.message)) }
+            throw OrderValidationException(orderErros)
+        }
+
         call.respond(orderService.save(order))
     }
 

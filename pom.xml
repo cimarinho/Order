@@ -34,6 +34,22 @@
             <artifactId>ktor-server-core-jvm</artifactId>
             <version>${ktor_version}</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/io.konform/konform -->
+        <dependency>
+            <groupId>io.konform</groupId>
+            <artifactId>konform</artifactId>
+            <version>0.3.0</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/io.konform/konform-jvm -->
+        <dependency>
+            <groupId>io.konform</groupId>
+            <artifactId>konform-jvm</artifactId>
+            <version>0.3.0</version>
+        </dependency>
+
+
         <dependency>
             <groupId>io.ktor</groupId>
             <artifactId>ktor-server-auth-jvm</artifactId>
