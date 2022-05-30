@@ -11,7 +11,6 @@ fun Application.configureSerialization() {
         jackson {
             registerModule(JavaTimeModule())
             enable(SerializationFeature.INDENT_OUTPUT)
-            enable(SerializationFeature.WRITE_SINGLE_ELEM_ARRAYS_UNWRAPPED)
         }
     }
 
