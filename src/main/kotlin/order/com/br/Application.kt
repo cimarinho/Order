@@ -6,9 +6,11 @@ import order.com.br.plugins.*
 
 fun main() {
     embeddedServer(Netty, port = 8081, host = "0.0.0.0") {
+        configureLocations()
         configureRouting()
         configureSecurity()
         configureMonitoring()
         configureSerialization()
+
     }.start(wait = true)
 }

@@ -6,6 +6,7 @@ import io.konform.validation.jsonschema.maxLength
 import io.konform.validation.jsonschema.minItems
 import io.konform.validation.jsonschema.minLength
 import io.konform.validation.jsonschema.minimum
+import io.ktor.server.locations.*
 import java.time.LocalDateTime
 
 data class Order(

@@ -2,6 +2,7 @@ package order.com.br.handler
 
 import io.ktor.http.*
 import io.ktor.server.application.*
+import io.ktor.server.locations.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
@@ -9,27 +10,29 @@ import order.com.br.model.Order
 import order.com.br.model.OrderError
 import order.com.br.model.validateUser
 import order.com.br.plugins.OrderException
+import order.com.br.plugins.OrderLocation
+import order.com.br.plugins.OrderLocationId
+
 import order.com.br.plugins.OrderValidationException
 import order.com.br.service.impl.OrderServiceImpl
 
 fun Routing.orderRoutes() {
 
-    val limitDefault = "1"
-    val sizeDefault = "10"
     val orderService = OrderServiceImpl()
 
-    get("/order") {
-        val limit = call.parameters.get("limit") ?: limitDefault
-        val size = call.parameters.get("size") ?: sizeDefault
-        println("limit $limit e size $size")
-        call.respond(orderService.list(limit.toInt(), size.toInt()))
+    get<OrderLocation>  {params ->
+        call.respond(orderService.list(params.limit, params.size))
     }
 
-    get("/order/{orderId}") {
-        val orderId = call.parameters.get("orderId") ?: throw OrderException("ID is required")
-        val get = orderService.get(orderId)
+    get<OrderLocationId>  { listing ->
+        val get = orderService.get(listing.orderId)
         call.respond(HttpStatusCode.OK, get)
     }
+
+    delete<OrderLocationId>  { listing ->
+        call.respond(orderService.delete(listing.orderId))
+    }
+
 
     put("/order/{orderId}") {
         val orderId = call.parameters.get("orderId") ?: throw OrderException("ID is required")
@@ -37,10 +40,6 @@ fun Routing.orderRoutes() {
         call.respond(orderService.put(orderId, order))
     }
 
-    delete("/order/{orderId}") {
-        val orderId = call.parameters.get("orderId") ?: throw OrderException("ID is required")
-        call.respond(orderService.delete(orderId))
-    }
 
     post("/order") {
         val order = call.receive(Order::class)
@@ -54,3 +53,4 @@ fun Routing.orderRoutes() {
     }
 
 }
+
