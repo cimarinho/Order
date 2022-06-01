@@ -10,13 +10,13 @@ import order.com.br.model.OrderError
 import order.com.br.model.validateUser
 import order.com.br.plugins.OrderException
 import order.com.br.plugins.OrderValidationException
-import order.com.br.service.OrderService
+import order.com.br.service.impl.OrderServiceImpl
 
 fun Routing.orderRoutes() {
 
     val limitDefault = "1"
     val sizeDefault = "10"
-    val orderService = OrderService()
+    val orderService = OrderServiceImpl()
 
     get("/order") {
         val limit = call.parameters.get("limit") ?: limitDefault

@@ -29,6 +29,24 @@
         </repository>
     </repositories>
     <dependencies>
+
+        <!-- https://mvnrepository.com/artifact/io.insert-koin/koin-core -->
+        <dependency>
+            <groupId>io.insert-koin</groupId>
+            <artifactId>koin-core</artifactId>
+            <version>3.2.0</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.koin/koin-test -->
+        <!-- https://mvnrepository.com/artifact/org.koin/koin-test -->
+        <dependency>
+            <groupId>io.insert-koin</groupId>
+            <artifactId>koin-test</artifactId>
+            <version>3.2.0</version>
+            <scope>test</scope>
+        </dependency>
+
+
+
         <dependency>
             <groupId>io.ktor</groupId>
             <artifactId>ktor-server-core-jvm</artifactId>
