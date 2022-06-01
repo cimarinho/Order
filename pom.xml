@@ -5,8 +5,8 @@
     <groupId>order.com.br</groupId>
     <artifactId>order</artifactId>
     <version>0.0.1</version>
-    <name>Order</name>
-    <description>Order</description>
+    <name>order</name>
+    <description>order</description>
     <properties>
         <ktor_version>2.0.1</ktor_version>
         <kotlin.code.style>official</kotlin.code.style>
@@ -66,7 +66,17 @@
             <artifactId>konform-jvm</artifactId>
             <version>0.3.0</version>
         </dependency>
+        <dependency>
+            <groupId>io.ktor</groupId>
+            <artifactId>ktor-server-metrics-micrometer-jvm</artifactId>
+            <version>${ktor_version}</version>
+        </dependency>
 
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+            <version>1.8.6</version>
+        </dependency>
 
         <dependency>
             <groupId>io.ktor</groupId>
@@ -146,6 +156,11 @@
             <version>5.8.1</version>
             <scope>test</scope>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>io.micrometer</groupId>-->
+<!--            <artifactId>micrometer-prometheus-starter</artifactId>-->
+<!--            <version>0.11.0.RELEASE</version>-->
+<!--        </dependency>-->
     </dependencies>
     <build>
         <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>

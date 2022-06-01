@@ -11,6 +11,7 @@ import order.com.br.model.OrderError
 fun Application.configureRouting() {
 
     routing {
+
         orderRoutes()
     }
 

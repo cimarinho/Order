@@ -11,6 +11,7 @@ fun main() {
         configureSecurity()
         configureMonitoring()
         configureSerialization()
+        configureMetrics()
 
     }.start(wait = true)
 }
