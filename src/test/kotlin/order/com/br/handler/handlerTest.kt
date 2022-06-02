@@ -10,6 +10,7 @@ import io.ktor.server.testing.*
 import junit.framework.TestCase.assertEquals
 import order.com.br.model.Items
 import order.com.br.model.Order
+import order.com.br.plugins.configureLocations
 import order.com.br.plugins.configureRouting
 import order.com.br.plugins.configureSerialization
 import org.junit.Before
@@ -33,6 +34,7 @@ class HandlerTest {
     @Test
     fun `get order by id`() = testApplication {
         application {
+            configureLocations()
             configureRouting()
             configureSerialization()
         }
@@ -45,18 +47,22 @@ class HandlerTest {
     @Test
     fun `get orders`() = testApplication {
         application {
+            configureLocations()
             configureRouting()
             configureSerialization()
         }
-        val response = client.get("/order")
-        val order = mapper.readValue<Order>(response.bodyAsText())
+        val response = client.get("/order?limit=2&size=10")
+        print(response.bodyAsText())
+        val order = mapper.readValue<List<Order>>(response.bodyAsText())
+        print(order)
         assertEquals(HttpStatusCode.OK, response.status)
-        assertEquals(2, order.items.size)
+        assertEquals(1, order.size)
     }
 
     @Test
     fun `create order`() = testApplication {
         application {
+            configureLocations()
             configureRouting()
             configureSerialization()
         }
@@ -72,6 +78,7 @@ class HandlerTest {
     @Test
     fun `delete order`() = testApplication {
         application {
+            configureLocations()
             configureRouting()
             configureSerialization()
         }
@@ -82,6 +89,7 @@ class HandlerTest {
     @Test
     fun `update order`() = testApplication {
         application {
+            configureLocations()
             configureRouting()
             configureSerialization()
         }
