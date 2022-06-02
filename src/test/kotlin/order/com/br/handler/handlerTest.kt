@@ -1,8 +1,8 @@
 package order.com.br.handler
 
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.fasterxml.jackson.module.kotlin.readValue
+
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
@@ -10,68 +10,76 @@ import io.ktor.server.testing.*
 import junit.framework.TestCase.assertEquals
 import order.com.br.model.Items
 import order.com.br.model.Order
-import order.com.br.plugins.configureRouting
-import order.com.br.plugins.configureSerialization
+import order.com.br.plugins.*
 import org.junit.Before
 import org.junit.Test
-import java.time.LocalDateTime
 
 
 class HandlerTest {
-    val mapper = jacksonObjectMapper()
     var order: Order? = null
+    var gson: Gson? = null
 
     @Before
     fun prepareTest() {
-        mapper.registerModule(JavaTimeModule())
+        val builder = GsonBuilder()
+        builder.setPrettyPrinting()
+        gson = builder.create()
         val item: MutableList<Items> = ArrayList()
         item.add(Items("23", "Monitor", 165.8))
         item.add(Items("153", "Teclado", 165.8))
-        order = Order("123", LocalDateTime.now(), 63.5, "marinho", item)
+        order = Order("123", "2022-05-27 16:34", 63.5, "marinho", item)
     }
 
     @Test
     fun `get order by id`() = testApplication {
         application {
+            configureLocations()
             configureRouting()
             configureSerialization()
         }
+
         val response = client.get("/order/123")
-        val order = mapper.readValue<Order>(response.bodyAsText())
+        val order = gson?.fromJson(response.bodyAsText(), Order::class.java)
         assertEquals(HttpStatusCode.OK, response.status)
-        assertEquals("123", order.id)
+        assertEquals("123", order?.id)
     }
+
 
     @Test
     fun `get orders`() = testApplication {
         application {
+            configureLocations()
             configureRouting()
             configureSerialization()
         }
-        val response = client.get("/order")
-        val order = mapper.readValue<Order>(response.bodyAsText())
+        val response = client.get("/order?limit=2&size=10")
         assertEquals(HttpStatusCode.OK, response.status)
-        assertEquals(2, order.items.size)
     }
 
     @Test
     fun `create order`() = testApplication {
         application {
+            configureLocations()
             configureRouting()
             configureSerialization()
         }
+
+        val jsonInString: String = gson!!.toJson(order)
         val response = client.post("/order") {
             contentType(ContentType.Application.Json)
-            setBody(mapper.writeValueAsString(order))
+            setBody(jsonInString)
         }
-        val orderResp = mapper.readValue<Order>(response.bodyAsText())
+        val orderResp = gson!!.fromJson(response.bodyAsText(), Order::class.java)
         assertEquals(HttpStatusCode.OK, response.status)
         assertEquals(2, orderResp.items.size)
+
+
     }
 
     @Test
     fun `delete order`() = testApplication {
         application {
+            configureLocations()
             configureRouting()
             configureSerialization()
         }
@@ -82,12 +90,16 @@ class HandlerTest {
     @Test
     fun `update order`() = testApplication {
         application {
-            configureRouting()
             configureSerialization()
+            configureLocations()
+            configureRouting()
+            configureSecurity()
+            configureMonitoring()
         }
+        val jsonInString: String = gson!!.toJson(order)
         val response = client.put("/order/123") {
             contentType(ContentType.Application.Json)
-            setBody(mapper.writeValueAsString(order))
+            setBody(jsonInString)
         }
         assertEquals(HttpStatusCode.OK, response.status)
     }

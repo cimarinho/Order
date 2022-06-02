@@ -3,7 +3,6 @@ package order.com.br.service.impl
 import order.com.br.model.Items
 import order.com.br.model.Order
 import order.com.br.plugins.OrderException
-import order.com.br.service.OrderService
 import java.time.LocalDateTime
 
 class OrderServiceImpl {
@@ -14,10 +13,12 @@ class OrderServiceImpl {
         val item: MutableList<Items> = ArrayList()
         item.add(Items("23", "Monitor", 165.8))
         item.add(Items("153", "Teclado", 165.8))
-        entries.add(Order("123", LocalDateTime.now(), 63.5, "marinho", item))
+        entries.add(Order("123", "2022-05-27 16:34", 63.5, "marinho", item))
     }
 
     fun list(limit: Int, size: Int): MutableList<Order> {
+        println("\n\n\n\n service $limit, $size")
+        println("\n\n\n\n entries $entries")
         return entries
     }
 

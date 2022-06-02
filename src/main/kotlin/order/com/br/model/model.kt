@@ -1,19 +1,16 @@
 package order.com.br.model
 
-import com.fasterxml.jackson.annotation.JsonFormat
 import io.konform.validation.Validation
 import io.konform.validation.jsonschema.maxLength
 import io.konform.validation.jsonschema.minItems
 import io.konform.validation.jsonschema.minLength
 import io.konform.validation.jsonschema.minimum
-import io.ktor.server.locations.*
-import java.time.LocalDateTime
 
 data class Order(
 
     val id: String,
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
-    val purchase: LocalDateTime,
+
+    val purchase: String,
     val price: Double,
     var userName: String,
     var items: List<Items>

@@ -8,7 +8,8 @@
     <name>order</name>
     <description>order</description>
     <properties>
-        <ktor_version>2.0.1</ktor_version>
+        <prometeus_version>1.6.3</prometeus_version>
+        <ktor_version>2.0.2</ktor_version>
         <kotlin.code.style>official</kotlin.code.style>
         <kotlin_version>1.6.21</kotlin_version>
         <logback_version>1.2.3</logback_version>
@@ -30,62 +31,40 @@
     </repositories>
     <dependencies>
 
-        <!-- https://mvnrepository.com/artifact/io.insert-koin/koin-core -->
-        <dependency>
-            <groupId>io.insert-koin</groupId>
-            <artifactId>koin-core</artifactId>
-            <version>3.2.0</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.koin/koin-test -->
-        <!-- https://mvnrepository.com/artifact/org.koin/koin-test -->
-        <dependency>
-            <groupId>io.insert-koin</groupId>
-            <artifactId>koin-test</artifactId>
-            <version>3.2.0</version>
-            <scope>test</scope>
-        </dependency>
-
-
-
         <dependency>
             <groupId>io.ktor</groupId>
-            <artifactId>ktor-server-core-jvm</artifactId>
+            <artifactId>ktor-server-status-pages-jvm</artifactId>
             <version>${ktor_version}</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/io.konform/konform -->
         <dependency>
             <groupId>io.konform</groupId>
             <artifactId>konform</artifactId>
             <version>0.3.0</version>
         </dependency>
-
-        <!-- https://mvnrepository.com/artifact/io.konform/konform-jvm -->
         <dependency>
             <groupId>io.konform</groupId>
             <artifactId>konform-jvm</artifactId>
             <version>0.3.0</version>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.fasterxml.jackson.datatype</groupId>-->
+<!--            <artifactId>jackson-datatype-jsr310</artifactId>-->
+<!--            <version>2.13.1</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>io.ktor</groupId>
-            <artifactId>ktor-server-metrics-micrometer-jvm</artifactId>
-            <version>${ktor_version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>io.micrometer</groupId>
-            <artifactId>micrometer-registry-prometheus</artifactId>
-            <version>1.8.6</version>
-        </dependency>
-
-        <dependency>
-            <groupId>io.ktor</groupId>
-            <artifactId>ktor-server-auth-jvm</artifactId>
+            <artifactId>ktor-client-content-negotiation-jvm</artifactId>
             <version>${ktor_version}</version>
         </dependency>
         <dependency>
             <groupId>io.ktor</groupId>
-            <artifactId>ktor-server-locations-jvm</artifactId>
+            <artifactId>ktor-serialization-kotlinx-json-jvm</artifactId>
+            <version>${ktor_version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.ktor</groupId>
+            <artifactId>ktor-server-core-jvm</artifactId>
             <version>${ktor_version}</version>
         </dependency>
         <dependency>
@@ -95,29 +74,27 @@
         </dependency>
         <dependency>
             <groupId>io.ktor</groupId>
+            <artifactId>ktor-serialization-gson-jvm</artifactId>
+            <version>${ktor_version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.ktor</groupId>
+            <artifactId>ktor-server-locations-jvm</artifactId>
+            <version>${ktor_version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.ktor</groupId>
+            <artifactId>ktor-server-metrics-micrometer-jvm</artifactId>
+            <version>${ktor_version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+            <version>${prometeus_version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.ktor</groupId>
             <artifactId>ktor-server-call-logging-jvm</artifactId>
-            <version>${ktor_version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.ktor</groupId>
-            <artifactId>ktor-server-metrics-jvm</artifactId>
-            <version>${ktor_version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.ktor</groupId>
-            <artifactId>ktor-serialization-jackson-jvm</artifactId>
-            <version>${ktor_version}</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-jsr310 -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-jsr310</artifactId>
-            <version>2.13.3</version>
-        </dependency>
-
-        <dependency>
-            <groupId>io.ktor</groupId>
-            <artifactId>ktor-server-status-pages-jvm</artifactId>
             <version>${ktor_version}</version>
         </dependency>
 
@@ -144,23 +121,6 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>io.ktor</groupId>
-            <artifactId>ktor-server-test-host-jvm</artifactId>
-            <version>${ktor_version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>5.8.1</version>
-            <scope>test</scope>
-        </dependency>
-<!--        <dependency>-->
-<!--            <groupId>io.micrometer</groupId>-->
-<!--            <artifactId>micrometer-prometheus-starter</artifactId>-->
-<!--            <version>0.11.0.RELEASE</version>-->
-<!--        </dependency>-->
     </dependencies>
     <build>
         <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
