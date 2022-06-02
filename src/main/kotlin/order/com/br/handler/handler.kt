@@ -21,7 +21,8 @@ fun Routing.orderRoutes() {
     val orderService = OrderServiceImpl()
 
     get<OrderLocation>  {params ->
-        call.respond(orderService.list(params.limit, params.size))
+        val list = orderService.list(params.limit, params.size)
+        call.respond(HttpStatusCode.OK,list.get(0))
     }
 
     get<OrderLocationId>  { listing ->
@@ -49,7 +50,9 @@ fun Routing.orderRoutes() {
             validationResult.errors.forEach { orderErros.add(OrderError(it.dataPath, it.message)) }
             throw OrderValidationException(orderErros)
         }
-        call.respond(orderService.save(order))
+        call.respond(HttpStatusCode.OK, orderService.save(order))
+
+
     }
 
 }

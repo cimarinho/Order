@@ -16,6 +16,7 @@ import order.com.br.plugins.configureSerialization
 import org.junit.Before
 import org.junit.Test
 import java.time.LocalDateTime
+import kotlin.test.assertNotNull
 
 
 class HandlerTest {
@@ -48,27 +49,26 @@ class HandlerTest {
     fun `get orders`() = testApplication {
         application {
             configureLocations()
-            configureRouting()
             configureSerialization()
+            configureRouting()
+
         }
         val response = client.get("/order?limit=2&size=10")
-        print(response.bodyAsText())
-        val order = mapper.readValue<List<Order>>(response.bodyAsText())
-        print(order)
         assertEquals(HttpStatusCode.OK, response.status)
-        assertEquals(1, order.size)
+        assertNotNull(response.bodyAsText())
     }
 
     @Test
     fun `create order`() = testApplication {
         application {
             configureLocations()
-            configureRouting()
             configureSerialization()
+            configureRouting()
         }
+        val objectOrder : String = mapper.writeValueAsString(order)
         val response = client.post("/order") {
             contentType(ContentType.Application.Json)
-            setBody(mapper.writeValueAsString(order))
+            setBody(objectOrder)
         }
         val orderResp = mapper.readValue<Order>(response.bodyAsText())
         assertEquals(HttpStatusCode.OK, response.status)
@@ -93,9 +93,10 @@ class HandlerTest {
             configureRouting()
             configureSerialization()
         }
+        val objectOrder : String = mapper.writeValueAsString(order)
         val response = client.put("/order/123") {
             contentType(ContentType.Application.Json)
-            setBody(mapper.writeValueAsString(order))
+            setBody(objectOrder)
         }
         assertEquals(HttpStatusCode.OK, response.status)
     }
